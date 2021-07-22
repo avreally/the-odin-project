@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import uniqid from "uniqid";
 import Overview from "./components/Overview";
 
 const Input = ({ addTask, newTask, handleTaskChange }) => {
@@ -10,7 +11,7 @@ const Input = ({ addTask, newTask, handleTaskChange }) => {
         value={newTask}
         onChange={handleTaskChange}
       ></input>
-      <button type="submit">Submit</button>
+      <button type="submit">submit</button>
     </form>
   );
 };
@@ -28,11 +29,16 @@ const App = () => {
 
     const addedTask = {
       name: newTask,
-      id: tasks.length + 1,
+      id: uniqid(),
     };
 
     setTasks(tasks.concat(addedTask));
     setNewTask("");
+  };
+
+  const handleDelete = (task) => {
+    const id = task.id;
+    setTasks(tasks.filter((task) => task.id !== id));
   };
 
   return (
@@ -42,7 +48,7 @@ const App = () => {
         newTask={newTask}
         handleTaskChange={handleTaskChange}
       />
-      <Overview tasks={tasks} />
+      <Overview tasks={tasks} handleDelete={handleDelete} />
     </div>
   );
 };
