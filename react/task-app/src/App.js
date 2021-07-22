@@ -19,6 +19,7 @@ const Input = ({ addTask, newTask, handleTaskChange }) => {
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
+  const [taskAmount, setTaskAmount] = useState(0);
 
   const handleTaskChange = (event) => {
     setNewTask(event.target.value);
@@ -32,13 +33,19 @@ const App = () => {
       id: uniqid(),
     };
 
+    const amount = taskAmount + 1;
+
     setTasks(tasks.concat(addedTask));
     setNewTask("");
+    setTaskAmount(amount);
   };
 
   const handleDelete = (task) => {
     const id = task.id;
     setTasks(tasks.filter((task) => task.id !== id));
+
+    const amount = taskAmount - 1;
+    setTaskAmount(amount);
   };
 
   return (
@@ -48,7 +55,11 @@ const App = () => {
         newTask={newTask}
         handleTaskChange={handleTaskChange}
       />
-      <Overview tasks={tasks} handleDelete={handleDelete} />
+      <Overview
+        tasks={tasks}
+        handleDelete={handleDelete}
+        taskAmount={taskAmount}
+      />
     </div>
   );
 };
