@@ -1,20 +1,7 @@
 import React, { useState } from "react";
 import uniqid from "uniqid";
 import Overview from "./components/Overview";
-
-const Input = ({ addTask, newTask, handleInputChange }) => {
-  return (
-    <form onSubmit={addTask}>
-      <label htmlFor="newTaskInput">Create new task:</label>
-      <input
-        id="newTaskInput"
-        value={newTask}
-        onChange={handleInputChange}
-      ></input>
-      <button type="submit">submit</button>
-    </form>
-  );
-};
+import Input from "./components/Input";
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
