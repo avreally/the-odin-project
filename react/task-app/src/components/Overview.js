@@ -1,7 +1,15 @@
 import React from "react";
 import Task from "./Task";
 
-const Overview = ({ tasks, handleDelete, taskAmount }) => {
+const Overview = ({
+  tasks,
+  handleDelete,
+  handleEdit,
+  handleTaskChange,
+  editTaskId,
+  changedTaskName,
+  handleSave,
+}) => {
   return (
     <div>
       {tasks.length === 0 ? (
@@ -11,13 +19,21 @@ const Overview = ({ tasks, handleDelete, taskAmount }) => {
           <ol>
             {tasks.map((task) => (
               <li key={task.id}>
-                <Task task={task} handleDelete={handleDelete} />
+                <Task
+                  task={task}
+                  handleDelete={handleDelete}
+                  handleEdit={handleEdit}
+                  handleTaskChange={handleTaskChange}
+                  editTaskId={editTaskId}
+                  changedTaskName={changedTaskName}
+                  handleSave={handleSave}
+                />
               </li>
             ))}
           </ol>
           <p>
-            You have {taskAmount}
-            {taskAmount === 1 ? " task" : " tasks"}.
+            You have {tasks.length}
+            {tasks.length === 1 ? " task" : " tasks"}.
           </p>
         </div>
       )}

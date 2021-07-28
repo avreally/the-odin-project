@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import uniqid from "uniqid";
 import Overview from "./components/Overview";
 
-const Input = ({ addTask, newTask, handleTaskChange }) => {
+const Input = ({ addTask, newTask, handleInputChange }) => {
   return (
     <form onSubmit={addTask}>
       <label htmlFor="newTaskInput">Create new task:</label>
       <input
         id="newTaskInput"
         value={newTask}
-        onChange={handleTaskChange}
+        onChange={handleInputChange}
       ></input>
       <button type="submit">submit</button>
     </form>
@@ -19,9 +19,10 @@ const Input = ({ addTask, newTask, handleTaskChange }) => {
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
-  const [taskAmount, setTaskAmount] = useState(0);
+  const [editTaskId, setEditTaskId] = useState();
+  const [changedTaskName, setChangedTaskName] = useState("");
 
-  const handleTaskChange = (event) => {
+  const handleInputChange = (event) => {
     setNewTask(event.target.value);
   };
 
@@ -33,19 +34,31 @@ const App = () => {
       id: uniqid(),
     };
 
-    const amount = taskAmount + 1;
-
     setTasks(tasks.concat(addedTask));
     setNewTask("");
-    setTaskAmount(amount);
   };
 
   const handleDelete = (task) => {
     const id = task.id;
     setTasks(tasks.filter((task) => task.id !== id));
+  };
 
-    const amount = taskAmount - 1;
-    setTaskAmount(amount);
+  const handleEdit = (task) => {
+    setEditTaskId(task.id);
+    setChangedTaskName(task.name);
+  };
+
+  const handleTaskChange = (event) => {
+    event.preventDefault();
+    setChangedTaskName(event.target.value);
+  };
+
+  const handleSave = () => {
+    const id = editTaskId;
+    const task = tasks.find((t) => t.id === id);
+    const changedTask = { ...task, name: changedTaskName };
+    setTasks(tasks.map((task) => (task.id !== id ? task : changedTask)));
+    setEditTaskId();
   };
 
   return (
@@ -53,12 +66,16 @@ const App = () => {
       <Input
         addTask={addTask}
         newTask={newTask}
-        handleTaskChange={handleTaskChange}
+        handleInputChange={handleInputChange}
       />
       <Overview
         tasks={tasks}
         handleDelete={handleDelete}
-        taskAmount={taskAmount}
+        handleEdit={handleEdit}
+        handleTaskChange={handleTaskChange}
+        editTaskId={editTaskId}
+        changedTaskName={changedTaskName}
+        handleSave={handleSave}
       />
     </div>
   );
