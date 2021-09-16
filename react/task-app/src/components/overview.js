@@ -1,5 +1,6 @@
 import React from "react";
-import Task from "./Task";
+import Task from "./task";
+import "../styles/overview.css";
 
 const Overview = ({
   tasks,
@@ -18,7 +19,7 @@ const Overview = ({
         <div>
           <ol>
             {tasks.map((task) => (
-              <li key={task.id}>
+              <li key={task.id} className="single-task">
                 <Task
                   task={task}
                   handleDelete={handleDelete}

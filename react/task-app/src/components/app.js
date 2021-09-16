@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import uniqid from "uniqid";
-import Overview from "./components/Overview";
-import Input from "./components/Input";
+import Overview from "./overview";
+import Input from "./input";
+import "../styles/app.css";
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
@@ -49,7 +50,7 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <Input
         addTask={addTask}
         newTask={newTask}
