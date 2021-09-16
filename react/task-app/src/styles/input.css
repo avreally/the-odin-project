@@ -1,0 +1,9 @@
+.new-task-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+
+.input-and-button {
+  padding: 10px 0;
+}
